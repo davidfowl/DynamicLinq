@@ -54,6 +54,25 @@
                                                                Expression.Quote(expression)));
         }
 
+        private static IQueryable<T> OrderBy<T>(IQueryable<T> source, LambdaExpression expression)
+        {
+            return source.Provider.CreateQuery<T>(Expression.Call(typeof(Queryable), 
+                                                  "OrderBy", 
+                                                  new[] { GetElementType(source), expression.Body.Type }, 
+                                                  source.Expression, 
+                                                  Expression.Quote(expression)));
+        }
+
+        private static IQueryable<T> OrderByDescending<T>(IQueryable<T> source, LambdaExpression expression)
+        {
+            return source.Provider.CreateQuery<T>(Expression.Call(typeof(Queryable),
+                                                  "OrderByDescending",
+                                                  new[] { GetElementType(source), expression.Body.Type },
+                                                  source.Expression,
+                                                  Expression.Quote(expression)));
+        }
+
+
         private static IQueryable<T> Where<T>(IQueryable<T> source, LambdaExpression expression)
         {
             return source.Provider.CreateQuery<T>(Expression.Call(typeof(Queryable),
@@ -206,6 +225,16 @@
         public static IQueryable<T> DynamicWhere<T>(this IQueryable<T> source, Func<dynamic, dynamic> predicate)
         {
             return Where<T>(source, GetExpression(source, predicate));
+        }
+
+        public static IQueryable<T> DynamicOrderBy<T>(this IQueryable<T> source, Func<dynamic, dynamic> selector)
+        {
+            return OrderBy(source, GetExpression(source, selector));
+        }
+
+        public static IQueryable<T> DynamicOrderByDescending<T>(this IQueryable<T> source, Func<dynamic, dynamic> selector)
+        {
+            return OrderByDescending(source, GetExpression(source, selector));
         }
 
         public static IQueryable<dynamic> DynamicOrderBy(this IQueryable<dynamic> source, Func<dynamic, dynamic> selector)

@@ -18,6 +18,7 @@ namespace Sample
                                           .DynamicWhere(p => 4 == p["UnitsInStock"])
                                           .DynamicWhere(p => p["UnitsInStock"] == 10)
                                           .DynamicWhere(p => p["UnitsInStock"] != 4)
+                                          .DynamicOrderByDescending(p => p["ProductName"])
                                           .Select(p => new
                                           {
                                               p.ProductName
