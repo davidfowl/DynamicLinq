@@ -56,14 +56,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DynamicLINQ.csproj">
-      <Project>{59E287A6-CD7F-43BF-90B5-7CD6ADD0CC8B}</Project>
-      <Name>DynamicLINQ</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.Config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DynamicLINQ\DynamicLINQ.csproj">
+      <Project>{59e287a6-cd7f-43bf-90b5-7cd6add0cc8b}</Project>
+      <Name>DynamicLINQ</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
