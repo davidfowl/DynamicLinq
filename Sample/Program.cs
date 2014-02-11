@@ -18,10 +18,13 @@ namespace Sample
                                           .DynamicWhere(p => 4 == p["UnitsInStock"])
                                           .DynamicWhere(p => p["UnitsInStock"] == 10)
                                           .DynamicWhere(p => p["UnitsInStock"] != 4)
-                                          .DynamicOrderByDescending(p => p["ProductName"])
+                                          .DynamicOrderBy(p => p["Discontinued"])
+                                          .DynamicThenByDescending(p => p["UnitsInStock"])
                                           .Select(p => new
                                           {
-                                              p.ProductName
+                                              p.ProductName,
+                                              p.Discontinued,
+                                              p.UnitsInStock
                                           });
 
             // Expression is translated here.

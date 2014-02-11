@@ -54,6 +54,24 @@
                                                                Expression.Quote(expression)));
         }
 
+        private static IQueryable ThenBy(IQueryable source, LambdaExpression expression)
+        {
+            return source.Provider.CreateQuery(Expression.Call(typeof(Queryable),
+                                                               "ThenBy",
+                                                               new[] { GetElementType(source), expression.Body.Type },
+                                                               source.Expression,
+                                                               Expression.Quote(expression)));
+        }
+
+        private static IQueryable ThenByDescending(IQueryable source, LambdaExpression expression)
+        {
+            return source.Provider.CreateQuery(Expression.Call(typeof(Queryable),
+                                                               "ThenByDescending",
+                                                               new[] { GetElementType(source), expression.Body.Type },
+                                                               source.Expression,
+                                                               Expression.Quote(expression)));
+        }
+
         private static IQueryable<T> OrderBy<T>(IQueryable<T> source, LambdaExpression expression)
         {
             return source.Provider.CreateQuery<T>(Expression.Call(typeof(Queryable), 
@@ -67,6 +85,24 @@
         {
             return source.Provider.CreateQuery<T>(Expression.Call(typeof(Queryable),
                                                   "OrderByDescending",
+                                                  new[] { GetElementType(source), expression.Body.Type },
+                                                  source.Expression,
+                                                  Expression.Quote(expression)));
+        }
+
+        private static IQueryable<T> ThenBy<T>(IQueryable<T> source, LambdaExpression expression)
+        {
+            return source.Provider.CreateQuery<T>(Expression.Call(typeof(Queryable),
+                                                  "ThenBy",
+                                                  new[] { GetElementType(source), expression.Body.Type },
+                                                  source.Expression,
+                                                  Expression.Quote(expression)));
+        }
+
+        private static IQueryable<T> ThenByDescending<T>(IQueryable<T> source, LambdaExpression expression)
+        {
+            return source.Provider.CreateQuery<T>(Expression.Call(typeof(Queryable),
+                                                  "ThenByDescending",
                                                   new[] { GetElementType(source), expression.Body.Type },
                                                   source.Expression,
                                                   Expression.Quote(expression)));
@@ -122,6 +158,24 @@
         {
             return source.Provider.CreateQuery<dynamic>(Expression.Call(typeof(Queryable),
                                                                "OrderByDescending",
+                                                               new[] { GetElementType(source), expression.Body.Type },
+                                                               source.Expression,
+                                                               Expression.Quote(expression)));
+        }
+
+        private static IQueryable<dynamic> ThenBy(IQueryable<dynamic> source, LambdaExpression expression)
+        {
+            return source.Provider.CreateQuery<dynamic>(Expression.Call(typeof(Queryable),
+                                                               "ThenBy",
+                                                               new[] { GetElementType(source), expression.Body.Type },
+                                                               source.Expression,
+                                                               Expression.Quote(expression)));
+        }
+
+        private static IQueryable<dynamic> ThenByDescending(IQueryable<dynamic> source, LambdaExpression expression)
+        {
+            return source.Provider.CreateQuery<dynamic>(Expression.Call(typeof(Queryable),
+                                                               "ThenByDescending",
                                                                new[] { GetElementType(source), expression.Body.Type },
                                                                source.Expression,
                                                                Expression.Quote(expression)));
@@ -211,6 +265,16 @@
             return OrderByDescending(source, GetExpression(source, selector));
         }
 
+        public static IQueryable DynamicThenBy(this IQueryable source, Func<dynamic, dynamic> selector)
+        {
+            return ThenBy(source, GetExpression(source, selector));
+        }
+
+        public static IQueryable DynamicThenByDescending(this IQueryable source, Func<dynamic, dynamic> selector)
+        {
+            return ThenByDescending(source, GetExpression(source, selector));
+        }
+
         public static IQueryable<TResult> DynamicSelect<TResult>(this IQueryable source, Func<dynamic, TResult> selector)
         {
             return Select<TResult>(source, GetSelectorExpression(source, selector));
@@ -234,7 +298,17 @@
 
         public static IQueryable<T> DynamicOrderByDescending<T>(this IQueryable<T> source, Func<dynamic, dynamic> selector)
         {
-            return OrderByDescending(source, GetExpression(source, selector));
+            return ThenByDescending(source, GetExpression(source, selector));
+        }
+
+        public static IQueryable<T> DynamicThenBy<T>(this IQueryable<T> source, Func<dynamic, dynamic> selector)
+        {
+            return ThenBy(source, GetExpression(source, selector));
+        }
+
+        public static IQueryable<T> DynamicThenByDescending<T>(this IQueryable<T> source, Func<dynamic, dynamic> selector)
+        {
+            return ThenByDescending(source, GetExpression(source, selector));
         }
 
         public static IQueryable<dynamic> DynamicOrderBy(this IQueryable<dynamic> source, Func<dynamic, dynamic> selector)
