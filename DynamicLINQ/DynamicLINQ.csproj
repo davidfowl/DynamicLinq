@@ -43,6 +43,7 @@
     <Compile Include="DynamicExpressionBuilder.cs" />
     <Compile Include="DynamicQueryable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryProviderExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
